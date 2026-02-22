@@ -1,0 +1,38 @@
+import Navbar from "../../components/Navbar";
+import Dashboard from "../../components/Dashboard";
+import API from "../../api/dashApi";
+import { useState, useEffect } from "react";
+
+const Admin = () => {
+    const [data, setData] = useState("");
+    useEffect(() => {
+        const fetchData = async () => {
+            try{
+                const res = await API.get("/admin-data");
+                setData(res.data.message);
+            }
+            catch (err)
+            {
+                alert("Unauthorized Access");
+            }
+        };
+        fetchData();
+    }, []);
+
+  return (
+    <>
+      <Navbar />
+
+      <div className="flex justify-center items-center h-[80vh] bg-gray-100">
+        <div className="bg-white shadow-lg rounded-xl p-8 w-96 text-center">
+          <h2 className="text-2xl font-bold mb-4">Welcome Admin 👑</h2>
+          <p className="text-gray-600">
+            You have full access to Manage Users, Employers and System Settings.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Admin;
