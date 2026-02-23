@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 const Admin = () => {
     const [data, setData] = useState("");
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (e) => {
+            e.preventDefault();
             try{
                 const res = await API.get("/admin-data");
                 setData(res.data.message);

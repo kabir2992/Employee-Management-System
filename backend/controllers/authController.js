@@ -117,7 +117,7 @@ exports.verifyOtp = async(req, res) => {
         return res.status(201).json({
             success: true,
             message: "User Registered Successfully",
-            data: user,
+            user,
             token
         });
 
@@ -194,7 +194,7 @@ exports.login = async(req, res) => {
 
 exports.verifyLoginOtp = async(req, res) => {
   try{
-    const { email, otp } = res.body();
+    const { email, otp } = req.body;
 
     if(!email || !otp)
         {
@@ -204,7 +204,7 @@ exports.verifyLoginOtp = async(req, res) => {
             });
         }
     
-    const otpRecord = await Otp.findOne({email, otp}).sort({ createdAt: -1});
+    const otpRecord = await Otp.findOne({email, otp});
 
         if(!otpRecord)
         {

@@ -6,6 +6,7 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 router.get("/admin-data", authMiddleware, roleMiddleware("Admin"),
 (req, res) => {
     res.json({
+        success: true,
         message: "Admin Secret Data",
         user: req.user
     });
@@ -13,6 +14,7 @@ router.get("/admin-data", authMiddleware, roleMiddleware("Admin"),
 
 router.get("/employer-data", authMiddleware, roleMiddleware("Employer"), (req, res) => {
     res.json({
+        success: true,
         message: "Employer Secret Data",
         user: req.user
     });
@@ -20,6 +22,7 @@ router.get("/employer-data", authMiddleware, roleMiddleware("Employer"), (req, r
 
 router.get("/user-data", authMiddleware, roleMiddleware("User"), (req, res) => {
     res.json({
+        success: true,
         message: "User Secret Data",
         user: req.user
     });

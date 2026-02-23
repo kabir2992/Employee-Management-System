@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupUser } from "../../api/authApi";
+import toast from "react-hot-toast";
 
 const Signup = () => {
     const [form, setForm] = useState({
@@ -13,16 +14,18 @@ const Signup = () => {
 
     const navigate = useNavigate();
 
-    const handleSignup = async () => {
+    const handleSignup = async (e) => {
+        e.preventDefault();
         try{
             await signupUser(form);
+            toast.success("OTP sent to Your Email");
             navigate ("/verify-otp",{
                 state: { email: form.email, type: "signup"}
             });
         }
         catch (err)
         {
-            alert(err.response?.data?.message || "Signup Failed");
+            toast.error(err.response?.data?.message || "Signup Failed");
         }
     };
 

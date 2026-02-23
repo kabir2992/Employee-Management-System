@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { verifySignupOtp, verifyLoginOtp } from "../../api/authApi";
+import toast from "react-hot-toast";
 
 const VerifyOtp = () => {
     const [otp, setOtp] = useState("");
@@ -9,17 +10,20 @@ const VerifyOtp = () => {
 
     const { email, type } = location.state;
 
-    const handleVerify = async () => {
+    const handleVerify = async (e) => {
+        e.preventDefault();
         try{
             let res;
 
             if (type === "signup")
             {
                 res = await verifySignupOtp({ email, otp });
+                toast.success("Sign Up Successful");
             }
             else
             {
                 res = await verifyLoginOtp({ email, otp });
+                toast.success("Login Successful");
             }
 
             const { token, user } = res.data;
@@ -42,7 +46,7 @@ const VerifyOtp = () => {
         }
         catch (err)
         {
-            alert(err.response?.data?.message || "OTP Verification Failed");
+            toast.error(err.response?.data?.message || "OTP Verification Failed");
         }
     };
 
