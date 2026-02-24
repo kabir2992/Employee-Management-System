@@ -2,7 +2,7 @@ import Navbar from "../../components/Navbar";
 import Dashboard from "../../components/Dashboard";
 import API from "../../api/dashApi";
 import { useState, useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
+import DashboardLayout from "../../layout/DashboardLayout";
 
 const Employer = () => {
     const [data, setData] = useState("");
@@ -22,16 +22,17 @@ const Employer = () => {
     }, []);
   return (
     <>
+      <DashboardLayout>
       <Navbar />
-      <Sidebar />
       <div className="flex justify-center items-center h-[80vh] bg-gray-100">
         <div className="bg-white shadow-lg rounded-xl p-8 w-96 text-center">
-          <h2 className="text-2xl font-bold mb-4">Welcome Employer 💼</h2>
+          <h2 className="text-3xl font-bold">Welcome Employer 💼</h2>
           <p className="text-gray-600">
             Post Jobs, Manage Applicants and Track Applications.
           </p>
         </div>
       </div>
+      </DashboardLayout>
     </>
   );
 };

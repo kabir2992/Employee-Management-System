@@ -25,6 +25,10 @@ app.use('/api/users',userRoutes);
 const dashRoutes = require('./routes/dashRoutes');
 app.use('/api/dashboard', dashRoutes);
 
+// For Admin Dashboard Data
+const adminRoutes = reqiure('./routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
+
 // Connection of Database via Mongoose for personal cluster in MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
 .then(() =>  console.log("Connection Established!!"))
