@@ -1,9 +1,9 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Home , Users, LogOut, Moon, Sun } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+import { ThemeProvider } from "../context/ThemeContext";
 
 const Sidebar = ({ role }) => {
-  const { darkMode, toggleTheme } = useTheme();
+  const { darkMode, toggleTheme } = ThemeProvider;
 
   const links = {
     Admin: [
@@ -41,7 +41,7 @@ const Sidebar = ({ role }) => {
         </button>
         <button onClick = {() => {
           localStorage.clear();
-          windows.location.href = "/login";
+          window.location.href = "/login";
         }} className = "flex items-center gap-2 hover:text-gray-300"><LogOut size = {18}>Log Out</LogOut></button>
       </div>
     </div>

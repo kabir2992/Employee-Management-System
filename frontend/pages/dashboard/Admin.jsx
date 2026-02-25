@@ -11,8 +11,8 @@ const Admin = () => {
     const decode = jwtDecode(token);
     const [data, setData] = useState("");
     useEffect(() => {
-        const fetchData = async (e) => {
-            e.preventDefault();
+        const fetchData = async () => {
+            // e.preventDefault();
             try{
                 const res = await API.get("/admin-data");
                 setData(res.data.message);
@@ -28,7 +28,6 @@ const Admin = () => {
   return (
     <>
       <DashboardLayout>
-      <Navbar />
       <div className="flex justify-center items-center h-[80vh] bg-gray-100">
         <div className="bg-white shadow-lg rounded-xl p-8 w-96 text-center">
           <h2 className="text-3xl font-bold">Welcome Admin 👑</h2>

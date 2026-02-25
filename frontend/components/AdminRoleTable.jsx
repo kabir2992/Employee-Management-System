@@ -1,5 +1,5 @@
-import { useState, useEfffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import API from "../api/axios";
 
 const AdminRoleTable = ({ role, loggedInUser}) => {
     const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
     const fetchData = async () => {
         try{
             setLoading(true);
-            const res = await axios.get(`/api/admin/users?role=${role}&page=${page}&limit=${limit}&search=${search}`,
+            const res = await API.get(`/users?role=${role}&page=${page}&limit=${limit}&search=${search}`,
                 {
                     headers: { Authorization: `Bearer ${token}`}
                 }
@@ -41,7 +41,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
 
     const handleDelete = async () => {
         try{
-            await axios.delete(`api/admin/users/${deleteUser._id}`, {
+            await API.delete(`/users/${deleteUser._id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setDeleteUser(null);
@@ -55,7 +55,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
 
     const handleUpdate = async () => {
         try{
-            await axios.put(`api/admin/users/${editUser._id}`,
+            await API.put(`/users/${editUser._id}`,
                 editUser,
                 {
                     headers: { Authorization: `Bearer ${token}`}
@@ -84,6 +84,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
                 <table className="w-full border-collapse">
                     <thead>
                       <tr className="bg-gray-100">
+                        <th className="border p-2">ID</th>
                         <th className="border p-2">First Name</th>
                         <th className="border p-2">Last Name</th>
                         <th className="border p-2">Email</th>
@@ -97,6 +98,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
                             ? "bg-yellow-100font-semibold"
                             : ""
                         }`}>
+                            <td className = "border p-2">{user._id}</td>
                             <td className = "border p-2">{user.fname}</td>
                             <td className = "border p-2">{user.lname}</td>
                             <td className = "border p-2">{user.email}</td>
@@ -144,12 +146,12 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
             {/* Edit Modal */}
 
             {editUser && (
-                <Modal onCLose = {() => setEditUser(null)}>
+                <Modal onClose = {() => setEditUser(null)}>
                     <h3 className = "text-lg font-bold mb-2">Edit User</h3>
                     <input className = "border p-2 w-full mb-2" value = {editUser.fname} onChange = {(e) => setEditUser({...editUser, fname: e.target.value})} /> <br></br>
                     <input className = "border p-2 w-full mb-2" value = {editUser.lname} onChange = {(e) => setEditUser({...editUser, lname: e.target.value})} /> <br></br>
                     <input className = "border p-2 2-full mb-2" value = {editUser.email} onChange = {(e) => setEditUser({...editUser, email: e.target.value})} /> <br></br>
-                    <button className = "bg-green-500 text-white px-4 py-2 rounded" onChange = {handleUpdate}>Update</button>
+                    <button className = "bg-green-500 text-white px-4 py-2 rounded" onClick = {handleUpdate}>Update</button>
                 </Modal>
             )}
 
@@ -158,7 +160,7 @@ const AdminRoleTable = ({ role, loggedInUser}) => {
             {deleteUser && (
                 <Modal onClose = {() => setDeleteUser(null)}>
                     <h3 className = "text-lg font-bold mb-2 text-red-600">Confirm Delete?</h3>
-                    <p>Are You Sure You Wanna Delete {deleteUser.role} ,{deleteUser.fname}?</p>
+                    <p>Are You Sure You Wanna Delete {deleteUser.role} {deleteUser.fname}?</p>
                     <button className = "bg-red-500 text-white px-4 py-2 rounded mt-4" onClick = {handleDelete}>Delete</button>
                 </Modal>
             )}
