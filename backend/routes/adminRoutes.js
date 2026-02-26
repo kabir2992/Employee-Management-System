@@ -53,7 +53,8 @@ router.get("/users", async (req, res) => {
     {
         return res.json({
             success: false,
-            message: "Server Error"
+            message: "Server Error",
+            error: error.message
         });
     }
 });
@@ -84,12 +85,13 @@ router.get("/users/:id", async (req, res) => {
     {
         return res.status(500).json({
             success:false,
-            message: "Server Error"
+            message: "Server Error",
+            error: error.message
         });
     }
 });
 
-router.put("/users:id", async (req, res) => {
+router.put("/users/:id", async (req, res) => {
     try{
         if (req.user.role !== "Admin")
         {
@@ -99,10 +101,10 @@ router.put("/users:id", async (req, res) => {
             });
         }
 
-        const {fname, lname, email, role} = req.body;
-        const updateUser = await Users.findByIDAndUpdate(
+        const {fname, lname, email} = req.body;
+        const updateUser = await Users.findByIdAndUpdate(
             req.params.id,
-            { fname, lname, email, role},
+            { fname, lname, email},
             { new: true }
         ).select("-password");
 
@@ -124,14 +126,15 @@ router.put("/users:id", async (req, res) => {
     {
         return res.status(500).json({
             success: false,
-            message: "Server Error"
+            message: "Server Error",
+            error: error.message
         });
     }
 });
 
 router.delete("/users/:id", async (req, res) => {
     try{
-        if (req.user.id !== "Admin")
+        if (req.user.role !== "Admin")
         {
             return res.status(403).json({
                 success: false,
@@ -158,7 +161,8 @@ router.delete("/users/:id", async (req, res) => {
     {
         return res.status(500).json({
             success: false,
-            message: "Server Error"
+            message: "Server Error",
+            error: error.message
         });
     }
 });
