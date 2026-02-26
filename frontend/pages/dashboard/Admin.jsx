@@ -10,20 +10,6 @@ const Admin = () => {
     const token = localStorage.getItem("token");
     const decode = jwtDecode(token);
     const [data, setData] = useState("");
-    useEffect(() => {
-        const fetchData = async () => {
-            // e.preventDefault();
-            try{
-                const res = await API.get("/admin-data");
-                setData(res.data.message);
-            }
-            catch (err)
-            {
-                alert("Unauthorized Access");
-            }
-        };
-        fetchData();
-    }, []);
 
   return (
     <>
