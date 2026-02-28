@@ -23,5 +23,6 @@ frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
 
+.env
 backend/.env
 frontend/.env
