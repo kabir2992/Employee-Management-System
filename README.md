@@ -8,6 +8,7 @@ Features
 Authentication
 Signup with OTP Verification
 Login with JWT Authentication
+Login with OAuth Google
 Role-based Access (Admin,Employer,User)
 Protected Routes
 Token-based authorization
@@ -41,6 +42,7 @@ Express.js
 MongoDB
 Mongoose
 JWT
+Google OAuth
 OTP Email Service
 
 Author
