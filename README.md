@@ -1,6 +1,7 @@
 Employee Management System
 
-A full-stack Role-Based Employee Management System built with the MERN stack, featuring authentication, OTP verification, admin dashboard, CRUD operations, pagination, filtering, and role-based access control.
+A full-stack Role-Based Employee Management System built with the MERN stack, featuring authentication, OTP verification,
+Admin Dashboard, CRUD operations, pagination, filtering, and role-based access control.
 
 Features
 
