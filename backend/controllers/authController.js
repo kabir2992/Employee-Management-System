@@ -4,6 +4,9 @@ const transpoter = require('../config/email');
 const User = require('../models/Users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 exports.signup = async (req, res) => {
   try {
@@ -130,9 +133,89 @@ exports.verifyOtp = async(req, res) => {
     }
 };
 
+exports.googlelogin = async(req, res) => {
+    try{
+    const { token } = req.body;
+    
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    
+    const payload = ticket.getPayload();
+    const email = payload.email;
+
+    const user = await User.findOne({ email });
+    // console.log("User from DB", email);
+    if (!user)
+    {
+      return res.status(400).json({
+        success: false,
+        message: "User Not Found!!"
+      });
+    }
+
+    if (!user.isVerified)
+    {
+      return res.status(400).json({
+        success: false,
+        message: "User is not Verified"
+      });
+    }
+
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if (!isMatch)
+    // {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Password Not Matching!!",
+    //     password: password,
+    //     email: email
+    //   });
+    // }
+    
+    const otp = generateOtp();
+
+    await Otp.create({
+      email,
+      otp,
+      expiredAt: new Date(Date.now() + 5 * 60 * 1000)
+    });
+
+    await transpoter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "OTP for Login",
+      text: `Your OTP is ${otp}. Valid for only 5 minutes`
+    });
+
+    return res.json({
+      success: true,
+      message: `OTP Sent Successfully!!. OTP:- ${otp}`,
+      exists: true,
+      email: email
+    });
+  }
+  catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to Login as Credentials are Wrong!!",
+      error: error.message
+    });
+  }
+};
+
 exports.login = async(req, res) => {
   try{
-    const { email , password} = req.body;
+    const { token } = req.body;
+    
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    
+    const payload = ticket.getPayload();
+    const email = payload.email;
     
     const user = await User.findOne({ email });
     // console.log("User from DB", email);
@@ -152,16 +235,16 @@ exports.login = async(req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-    {
-      return res.status(400).json({
-        success: false,
-        message: "Password Not Matching!!",
-        password: password,
-        email: email
-      });
-    }
+    // const isMatch = await bcrypt.compare(password, user.password);
+    // if (!isMatch)
+    // {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Password Not Matching!!",
+    //     password: password,
+    //     email: email
+    //   });
+    // }
     
     const otp = generateOtp();
 
@@ -180,7 +263,8 @@ exports.login = async(req, res) => {
 
     return res.json({
       success: true,
-      message: `OTP Sent Successfully!!. OTP:- ${otp}`
+      message: `OTP Sent Successfully!!. OTP:- ${otp}`,
+      exists: true
     });
   }
   catch (error) {
@@ -235,7 +319,8 @@ exports.verifyLoginOtp = async(req, res) => {
       success: true,
       message: "Login Successfull!!",
       token,
-      user
+      user,
+      exists: true
     })
   }
   catch (error)

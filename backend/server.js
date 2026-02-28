@@ -33,6 +33,7 @@ app.use('/api/admin', adminRoutes);
 mongoose.connect(process.env.MONGO_URI)
 .then(() =>  console.log("Connection Established!!"))
 .catch(err => console.log("Error Occured!!",err));
+// console.log("Google CLient ID:- ", process.env.GOOGLE_CLIENT_ID);
 
 // Simple way to check whether the server is running or not
 app.get('/health', (req, res) => {

@@ -4,14 +4,18 @@ import { LoadingProvider } from "../context/LoadingContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from '../context/ThemeContext.jsx';
 import ReactDOM from "react-dom/client";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import './index.css'
 import App from './App.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <GoogleOAuthProvider clientId = {import.meta.env.VITE_GOOGLE_CLIENT_ID}>
   <ThemeProvider>
   <LoadingProvider>
-    <App />
-    <Toaster position = "top-right" reverseOrder = {false}></Toaster>
+    <App>
+      <Toaster position = "top-right" reverseOrder = {false}></Toaster>
+    </App>
   </LoadingProvider>
   </ThemeProvider>
+  </GoogleOAuthProvider>
 );

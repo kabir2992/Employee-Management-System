@@ -8,7 +8,8 @@ const VerifyOtp = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { email, type } = location.state;
+    const email = location.state?.email;
+    const type = location.state;
 
     const handleVerify = async (e) => {
         e.preventDefault();
@@ -56,7 +57,7 @@ const VerifyOtp = () => {
             <form onSubmit = {handleVerify}>
                 <input type = "text" name = "otp" value = {otp} placeholder = "Enter 6 Digit OTP" onChange = {(e) => setOtp(e.target.value)} 
                 className = "border p-2 rounded mb-4" />
-                <input type = "submit" value = "Verify OTP" className="bg-blue-500 text-white px-4 py-2 rounded" />
+                <input type = "submit" value = "Verify OTP" className="bg-white-500 text-white px-4 py-2 rounded" />
             </form>
         </div>
     );
