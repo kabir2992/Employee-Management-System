@@ -27,7 +27,7 @@ Toast Notification
 
 Tech Stack
 
-Frontend
+Frontend:-
 React (Vite)
 React Router DOM
 Axios
@@ -35,13 +35,14 @@ Tailwind CSS
 React Hot Toast
 JWT Decode
 
-Backend
+Backend:-
 Node.js
 Express.js
 MongoDB
 Mongoose
 JWT
 OTP Email Service
+OAuth with Google for Login
 
 Author
 Kabir Sheth
