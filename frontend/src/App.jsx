@@ -17,6 +17,7 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import { useContext, useEffect, useState } from 'react';
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,6 +30,7 @@ function App() {
   return (
     <BrowserRouter>
     <Loader />
+    <Toaster position = "top-right" />
       <Routes>
         <Route path = "/login" element = {<Login />}></Route>
         <Route path = "/signup" element = {<Signup />}></Route>

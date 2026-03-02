@@ -264,7 +264,8 @@ exports.login = async(req, res) => {
     return res.json({
       success: true,
       message: `OTP Sent Successfully!!. OTP:- ${otp}`,
-      exists: true
+      exists: true,
+      email: email
     });
   }
   catch (error) {
@@ -284,7 +285,8 @@ exports.verifyLoginOtp = async(req, res) => {
         {
             return res.status(400).json({
                 success: false,
-                message: "OTP/Email is Empty"
+                message: "OTP/Email is Empty",
+                email: email
             });
         }
     

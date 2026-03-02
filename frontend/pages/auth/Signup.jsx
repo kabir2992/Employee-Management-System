@@ -16,6 +16,7 @@ const Signup = () => {
 
     const handleSignup = async (e) => {
         e.preventDefault();
+        console.log("Hey I'm Working!!");
         try{
             await signupUser(form);
             toast.success("OTP sent to Your Email");
@@ -26,6 +27,7 @@ const Signup = () => {
         catch (err)
         {
             toast.error(err.response?.data?.message || "Signup Failed");
+            console.log(err);
         }
     };
 
@@ -44,7 +46,7 @@ const Signup = () => {
             <option value = "Admin">Admin</option>
         </select>
 
-        <input type = "submit" value = "Signup" />
+        <button type = "submit">Sign Up</button>
         </form>
         <p className="mt-4 text-blue-600 cursor-pointer" onClick = {() => navigate("/login")}>
                     Already hold an Account? Login</p>

@@ -8,11 +8,11 @@ const VerifyOtp = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const email = location.state?.email;
-    const type = location.state;
+    const { email, type } = location.state;
 
     const handleVerify = async (e) => {
         e.preventDefault();
+        console.log(type);
         try{
             let res;
 
