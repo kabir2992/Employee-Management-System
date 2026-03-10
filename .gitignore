@@ -23,6 +23,7 @@ frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
 
-.env
 backend/.env
 frontend/.env
+config.bat
+node_modules
